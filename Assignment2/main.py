@@ -1,8 +1,10 @@
 import qiskit
-import superdenseCoding_classes
+import superdense_coding
+import quantum_teleportation
 from qiskit_ibm_runtime import QiskitRuntimeService
 import os
 from qiskit_aer import AerSimulator, Aer
+import math
 
 print(f"Qiskit version: {qiskit.__version__}")
 
@@ -21,5 +23,6 @@ if (mode == 'ibm'):
 elif (mode == 'aer'):
     backend = AerSimulator()
 
-superdenseCoding_classes.run_quantum_circuit([0,  0], backend)
+quantum_teleportation.run_quantum_circuit(0, [math.sqrt(4/4), 0 * math.sqrt(1/4)], backend)
+superdense_coding.run_quantum_circuit([0,  0], backend)
 
