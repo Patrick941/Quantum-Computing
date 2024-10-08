@@ -1,3 +1,4 @@
 qiskitVenv
 apiKey.txt
 __pycache__
+*.pyc
