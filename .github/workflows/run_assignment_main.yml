@@ -2,6 +2,10 @@ name: run_assignment_main
 
 on:
   workflow_dispatch:
+    inputs:
+      assignment:
+        description: 'Assignment to run'
+        required: true
 
 jobs:
   build:
@@ -23,4 +27,5 @@ jobs:
 
       - name: Run assignment main
         run: |
-          python main.py
+            cd Assignment${{ github.event.inputs.assignment }}
+            python main.py
