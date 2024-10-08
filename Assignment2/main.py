@@ -15,7 +15,7 @@ if os.path.exists(api_key_path):
     with open(api_key_path, 'r') as file:
         api_key = file.read().strip()
 else:
-    api_key = os.getenv('IBM_QUANTUM_API_KEY')
+    api_key = os.getenv('API_KEY')
     if api_key is None:
         raise ValueError("API key not found in file or environment variable.")
 
