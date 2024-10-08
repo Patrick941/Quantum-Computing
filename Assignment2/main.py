@@ -17,5 +17,5 @@ with open(api_key_path, 'r') as file:
 ## print(f"Number of qubits in backend: {backend.num_qubits}")
 
 
-superdenseCoding_classes.run_quantum_circuit()
+superdenseCoding_classes.run_quantum_circuit([0,  0])
 
