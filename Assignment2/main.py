@@ -1,6 +1,7 @@
 import qiskit
 import superdense_coding
 import quantum_teleportation
+import deutsch_algorithm
 from qiskit_ibm_runtime import QiskitRuntimeService
 import os
 from qiskit_aer import AerSimulator, Aer
@@ -20,7 +21,7 @@ else:
         raise ValueError("API key not found in file or environment variable.")
 
 
-mode = 'aer'
+mode = os.getenv('MODE', 'aer')
 if (mode == 'ibm'):
     service = QiskitRuntimeService(channel="ibm_quantum", token=api_key)
     backend = service.backend(name="ibm_brisbane")
@@ -28,6 +29,7 @@ if (mode == 'ibm'):
 elif (mode == 'aer'):
     backend = AerSimulator()
 
-quantum_teleportation.run_quantum_circuit([math.sqrt(1/2), math.sqrt(1/2)], backend)
-superdense_coding.run_quantum_circuit([0,  0], backend)
 
+# superdense_coding.run_quantum_circuit([0,  0], backend)
+# quantum_teleportation.run_quantum_circuit([math.sqrt(1/2), math.sqrt(1/2)], backend)
+deutsch_algorithm.run_quantum_circuit(backend)
