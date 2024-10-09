@@ -25,6 +25,8 @@ def run_quantum_circuit(backend):
     # Run the circuits for both oracles
     for type, oracle in (('balanced:', balanced), ('constant:', constant)):
         qc = init.compose(oracle).compose(end)
+        print(f"Circuit for oracle {type}")
+        print(qc.draw())
         transpiled = transpile(qc, backend)
         job = backend.run(transpiled)
         result = job.result()
