@@ -28,6 +28,6 @@ if (mode == 'ibm'):
 elif (mode == 'aer'):
     backend = AerSimulator()
 
-quantum_teleportation.run_quantum_circuit(0, [math.sqrt(4/4), 0 * math.sqrt(1/4)], backend)
+quantum_teleportation.run_quantum_circuit([math.sqrt(1/2), math.sqrt(1/2)], backend)
 superdense_coding.run_quantum_circuit([0,  0], backend)
 
