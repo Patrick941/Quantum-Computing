@@ -31,14 +31,11 @@ def run_quantum_circuit(backend):
         job = backend.run(transpiled)
         result = job.result()
         counts = result.get_counts()
-        if (len(counts) > 1):
-            print("Error: Uncertain result")
-        else:
-            for key, value in counts.items():
-                key = int(key)
-                if (key == 0):
-                    print(f"Key was 0 oracle is detected constant, was expected to be {type}")
-                elif (key == 1):
-                    print(f"Key was 1 oracle is detected balanced, was expected to be {type}")
-                else:
-                    print(f"Error: Invalid key, key is {key}")
+        for key, value in counts.items():
+            key = int(key)
+            if (key == 0):
+                print(f"Key was 0 oracle is detected constant, was expected to be {type}")
+            elif (key == 1):
+                print(f"Key was 1 oracle is detected balanced, was expected to be {type}")
+            else:
+                print(f"Error: Invalid key, key is {key}")

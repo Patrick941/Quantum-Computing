@@ -25,8 +25,5 @@ def run_quantum_circuit(qubits, backend):
     
     result = job.result()
     counts = result.get_counts()
-    if (len(counts) > 1):
-        print("Error: Uncertain result")
-    else:
-        for key, value in counts.items():
-            print(f"Message Cubits: {key[1::-1]}\nReceived Cubits: {key[3:1:-1]}\n")
+    for key, value in counts.items():
+        print(f"Message Cubits: {key[1::-1]}\nReceived Cubits: {key[3:1:-1]}\n")
