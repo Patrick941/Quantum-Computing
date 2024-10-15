@@ -30,6 +30,17 @@ elif (mode == 'aer'):
     backend = AerSimulator()
 
 
-superdense_coding.run_quantum_circuit([0,  0], backend)
-quantum_teleportation.run_quantum_circuit([math.sqrt(1/2), math.sqrt(1/2)], backend)
-deutsch_algorithm.run_quantum_circuit(backend)
+output_dir = os.path.join(current_dir, 'output')
+os.makedirs(output_dir, exist_ok=True)
+
+superdense_output = superdense_coding.run_quantum_circuit([0, 0], backend)
+with open(os.path.join(output_dir, 'superdense_output.txt'), 'w') as file:
+    file.write(str(superdense_output))
+
+teleportation_output = quantum_teleportation.run_quantum_circuit([math.sqrt(1/2), math.sqrt(1/2)], backend)
+with open(os.path.join(output_dir, 'teleportation_output.txt'), 'w') as file:
+    file.write(str(teleportation_output))
+
+deutsch_output = deutsch_algorithm.run_quantum_circuit(backend)
+with open(os.path.join(output_dir, 'deutsch_output.txt'), 'w') as file:
+    file.write(str(deutsch_output))
