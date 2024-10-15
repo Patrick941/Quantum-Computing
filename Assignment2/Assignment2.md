@@ -123,3 +123,7 @@ def run_quantum_circuit(message_qubit, backend):
         print(f"{round(value/sum_values, 3)}|{key[0]}⟩ ", end="")
     print("")
 ```
+
+### Deutsch's Algorithm
+This algorithm is an algorithm that is used to determine whether a function is constant or balanced. A function is said to be constant if f(1) == f(0) and balanced if f(1) != f(0). The function can also be referred to as a black box function or an oracle.\
+A superposition of the input qubits is created and then the oracle is applied to the superposition. This then creates the same scenario as the phase oracle
