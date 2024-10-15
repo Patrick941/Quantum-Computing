@@ -6,6 +6,8 @@ from qiskit_ibm_runtime import QiskitRuntimeService
 import os
 from qiskit_aer import AerSimulator, Aer
 import math
+import io
+import sys
 
 print(f"Qiskit version: {qiskit.__version__}")
 
@@ -33,14 +35,25 @@ elif (mode == 'aer'):
 output_dir = os.path.join(current_dir, 'output')
 os.makedirs(output_dir, exist_ok=True)
 
-superdense_output = superdense_coding.run_quantum_circuit([0, 0], backend)
+# Function to capture the output of a function
+def capture_output(func, *args, **kwargs):
+    captured_output = io.StringIO()          # Create StringIO object
+    sys.stdout = captured_output             # Redirect stdout.
+    func(*args, **kwargs)                    # Call the function.
+    sys.stdout = sys.__stdout__              # Reset redirect.
+    return captured_output.getvalue()        # Get the captured output.
+
+# Capture and save the output of superdense_coding
+superdense_output = capture_output(superdense_coding.run_quantum_circuit, [0, 0], backend)
 with open(os.path.join(output_dir, 'superdense_output.txt'), 'w') as file:
-    file.write(str(superdense_output))
+    file.write(superdense_output)
 
-teleportation_output = quantum_teleportation.run_quantum_circuit([math.sqrt(1/2), math.sqrt(1/2)], backend)
+# Capture and save the output of quantum_teleportation
+teleportation_output = capture_output(quantum_teleportation.run_quantum_circuit, [math.sqrt(1/2), math.sqrt(1/2)], backend)
 with open(os.path.join(output_dir, 'teleportation_output.txt'), 'w') as file:
-    file.write(str(teleportation_output))
+    file.write(teleportation_output)
 
-deutsch_output = deutsch_algorithm.run_quantum_circuit(backend)
+# Capture and save the output of deutsch_algorithm
+deutsch_output = capture_output(deutsch_algorithm.run_quantum_circuit, backend)
 with open(os.path.join(output_dir, 'deutsch_output.txt'), 'w') as file:
-    file.write(str(deutsch_output))
+    file.write(deutsch_output)
