@@ -42,16 +42,20 @@ def capture_output(func, *args, **kwargs):
     return captured_output.getvalue()        # Get the captured output.
 
 # Capture and save the output of superdense_coding
+# Capture and save the output of superdense_coding
 superdense_output = capture_output(superdense_coding.run_quantum_circuit, [0, 0], backend)
+print(superdense_output)
 with open(os.path.join(current_dir, 'superdense_output.txt'), 'w') as file:
     file.write(superdense_output)
 
 # Capture and save the output of quantum_teleportation
 teleportation_output = capture_output(quantum_teleportation.run_quantum_circuit, [math.sqrt(1/2), math.sqrt(1/2)], backend)
+print(teleportation_output)
 with open(os.path.join(current_dir, 'teleportation_output.txt'), 'w') as file:
     file.write(teleportation_output)
 
 # Capture and save the output of deutsch_algorithm
 deutsch_output = capture_output(deutsch_algorithm.run_quantum_circuit, backend)
+print(deutsch_output)
 with open(os.path.join(current_dir, 'deutsch_output.txt'), 'w') as file:
     file.write(deutsch_output)
