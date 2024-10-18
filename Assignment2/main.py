@@ -32,8 +32,6 @@ elif (mode == 'aer'):
     backend = AerSimulator()
 
 
-output_dir = os.path.join(current_dir, 'output')
-os.makedirs(output_dir, exist_ok=True)
 
 # Function to capture the output of a function
 def capture_output(func, *args, **kwargs):
@@ -45,15 +43,15 @@ def capture_output(func, *args, **kwargs):
 
 # Capture and save the output of superdense_coding
 superdense_output = capture_output(superdense_coding.run_quantum_circuit, [0, 0], backend)
-with open(os.path.join(output_dir, 'superdense_output.txt'), 'w') as file:
+with open(os.path.join(current_dir, 'superdense_output.txt'), 'w') as file:
     file.write(superdense_output)
 
 # Capture and save the output of quantum_teleportation
 teleportation_output = capture_output(quantum_teleportation.run_quantum_circuit, [math.sqrt(1/2), math.sqrt(1/2)], backend)
-with open(os.path.join(output_dir, 'teleportation_output.txt'), 'w') as file:
+with open(os.path.join(current_dir, 'teleportation_output.txt'), 'w') as file:
     file.write(teleportation_output)
 
 # Capture and save the output of deutsch_algorithm
 deutsch_output = capture_output(deutsch_algorithm.run_quantum_circuit, backend)
-with open(os.path.join(output_dir, 'deutsch_output.txt'), 'w') as file:
+with open(os.path.join(current_dir, 'deutsch_output.txt'), 'w') as file:
     file.write(deutsch_output)
