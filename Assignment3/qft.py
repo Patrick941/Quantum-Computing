@@ -1,45 +1,36 @@
 from qiskit import *
+from qiskit.circuit.library import QFT
 
-def qft_circuit(num_qubits):
+def run_quantum_circuit(input_state, backend):
     """
-    Creates a Quantum Fourier Transform (QFT) circuit for a given number of qubits.
+    Initializes a quantum circuit with the given input state and applies QFT twice.
     """
-    qc = QuantumCircuit(num_qubits)
-    
-    # Apply the QFT
-    for qubit in range(num_qubits):
-        qc.h(qubit)
-        for other_qubit in range(qubit + 1, num_qubits):
-            qc.cp(2 * 3.14159 / (2 ** (other_qubit - qubit + 1)), qubit, other_qubit)
-    
-    # Swap qubits for reversing bit order
-    for qubit in range(num_qubits // 2):
-        qc.swap(qubit, num_qubits - qubit - 1)
-    
-    qc.measure_all()
-    return qc
+    num_qubits = len(input_state)
 
-def run_quantum_circuit(qubits, backend):
-    """
-    Initializes a quantum circuit with the given qubits and applies QFT.
-    """
-    num_qubits = len(qubits)
-    qc = QuantumCircuit(num_qubits)
+    # Define quantum and classical registers
+    q = QuantumRegister(num_qubits, 'q')
+    c = ClassicalRegister(num_qubits, 'c')
+    qc = QuantumCircuit(q, c)
 
-    # Initialize the state from input probabilities
-    for i, value in enumerate(qubits):
-        qc.initialize([1 - value, value], i)
+    # Initialize qubits based on input
+    for i, value in enumerate(input_state):
+        if value == '1':
+            qc.x(q[i])  # Apply X gate to set |1> if the input is 1
 
-    # Apply the QFT
-    qft_qc = qft_circuit(num_qubits)
-    qc.compose(qft_qc, inplace=True)
+    # Apply the QFT twice
+    # Apply the QFT and its inverse
+    qc.append(QFT(num_qubits=num_qubits, approximation_degree=0, do_swaps=True), q)
+    qc.append(QFT(num_qubits=num_qubits, approximation_degree=0, do_swaps=True), q)
+    # Measure the qubits
+    qc.measure(q, c)
+
+    # Draw and display the circuit
+    # print(qc.draw(output='text'))
 
     # Compile and run the circuit
-    print(qc.draw())
     qc_compiled = transpile(qc, backend=backend)
     job = backend.run(qc_compiled)
 
     result = job.result()
     counts = result.get_counts()
-    print("Measurement Results:")
-    print(counts)
+    return counts

@@ -18,7 +18,7 @@ if os.path.exists(api_key_path):
 else:
     api_key = os.getenv('API_KEY')
     if api_key is None:
-        raise ValueError("API key not found in file or environment variable.")
+        print("API key not found in file or environment variable.")
 
 
 mode = os.getenv('MODE', 'aer')
@@ -39,5 +39,12 @@ def capture_output(func, *args, **kwargs):
     sys.stdout = sys.__stdout__              # Reset redirect.
     return captured_output.getvalue()        # Get the captured output.
 
-input_qubits = [0.5, 0.5, 0.5]
-qft.run_quantum_circuit(input_qubits, backend)
+input_qubits_list = [f"{i:03b}" for i in range(8)]
+
+for input_qubits in input_qubits_list:
+    output = qft.run_quantum_circuit(input_qubits, backend)
+    if len(output) == 1:
+        output_qubits = list(output.keys())[0][::-1]
+        print(f"{input_qubits} -> {output_qubits}")
+    else:
+        print("Error: More than one output qubit")
